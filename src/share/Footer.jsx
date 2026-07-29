@@ -24,7 +24,7 @@ function Footer() {
     const emailAddress = "hello@mtraderslastllc.com";
 
     return (
-        <footer className="w-full mt-20 relative overflow-hidden transition-colors duration-300 bg-white dark:bg-black border-t border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-400">
+        <footer className="w-full relative overflow-hidden transition-colors duration-300 bg-white dark:bg-black border-t border-slate-200 dark:border-slate-900 text-slate-600 dark:text-slate-400">
 
             {/* Background Watermark Text - Full Width & Behind Main Grid */}
             <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-center items-center pointer-events-none select-none z-0 overflow-hidden w-full">
