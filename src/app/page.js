@@ -1,9 +1,12 @@
+import Navbar from '@/share/Navbar'
 import React from 'react'
 
 function Home() {
-  return (
-    <div>Home</div>
-  )
+    return (
+        <div>
+            <Navbar />
+        </div>
+    )
 }
 
 export default Home
