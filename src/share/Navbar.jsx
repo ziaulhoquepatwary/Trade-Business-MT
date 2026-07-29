@@ -78,8 +78,8 @@ function Navbar() {
             {/* Main Header */}
             <nav
                 className={`w-full fixed left-0 z-50 top-0 lg:top-9 h-19 transition-all duration-300 ${scrolled
-                    ? "bg-white/90 dark:bg-[#0B0D11]/90 backdrop-blur-xl shadow-[0_1px_0_0_rgba(0,0,0,0.04)]"
-                    : "bg-white dark:bg-[#0B0D11]"
+                    ? "bg-transparent dark:bg-[#0B0D11]/80 backdrop-blur-xl shadow-[0_1px_0_0_rgba(0,0,0,0.04)]"
+                    : "bg-transparent"
                     } border-b border-slate-200/60 dark:border-white/[0.06]`}
             >
                 <div className="w-full h-full flex items-center justify-between px-5 sm:px-8 lg:px-10 xl:px-14">
@@ -97,7 +97,7 @@ function Navbar() {
                                     <span className="text-sm font-bold text-slate-900 dark:text-white leading-none tracking-tight">
                                         TradeChain
                                     </span>
-                                    <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-widest">
+                                    <span className="text-[10px] text-slate-700 dark:text-slate-400 font-medium uppercase tracking-widest">
                                         Global Logistics
                                     </span>
                                 </div>
@@ -117,8 +117,8 @@ function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         className={`relative px-4 py-2 rounded-full text-[13px] font-semibold transition-all duration-200 ${active
-                                                ? "bg-slate-900 text-white dark:bg-[#04cccc] dark:text-slate-950 shadow-md scale-100"
-                                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/10"
+                                            ? "bg-slate-900 text-white dark:bg-[#04cccc] dark:text-slate-950 shadow-md scale-100"
+                                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/60 dark:hover:bg-white/10"
                                             }`}
                                     >
                                         {link.name}
