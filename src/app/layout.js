@@ -17,8 +17,8 @@ const patuaOne = Patua_One({
 });
 
 export const metadata = {
-    title: "Trade MT",
-    description: "Join EduHub to access premium courses, interactive learning, and career-focused skill development.",
+    title: "Trade Chain",
+    description: "",
 };
 
 export default function RootLayout({ children }) {
