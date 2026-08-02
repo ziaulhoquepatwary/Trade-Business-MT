@@ -111,7 +111,7 @@ function Navbar() {
                                         key={link.name}
                                         href={link.href}
                                         className={`relative px-4 py-2 rounded-full text-[13px] text-gray-900 font-semibold transition-all duration-300 ${active
-                                            ? "bg-[#3D52A0] text-white dark:bg-[#04cccc] dark:text-slate-950 shadow-md scale-100"
+                                            ? "bg-[#3D52A0] text-white dark:bg-[#7688c9] dark:text-slate-950 shadow-md scale-100"
                                             : "text-[#3D52A0] dark:text-slate-400 hover:text-[#3D52A0] dark:hover:text-white hover:bg-[#3D52A0]/15 dark:hover:bg-white/10"
                                             }`}
                                     >

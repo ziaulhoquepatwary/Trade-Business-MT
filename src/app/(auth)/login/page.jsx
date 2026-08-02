@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Anchor, Globe, MoveLeft } from "lucide-react";
@@ -9,7 +9,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter, useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 
-function Login() {
+function LoginContent() {
     const [showPassword, setShowPassword] = useState(false);
 
     const router = useRouter();
@@ -115,7 +115,7 @@ function Login() {
                                     },
                                 })}
                                 className={`w-full pl-10 pr-4 py-3 bg-zinc-50 dark:bg-zinc-950 border text-sm font-mono focus:outline-none transition-all text-black dark:text-white placeholder:text-zinc-400
-                ${errors.email
+                                ${errors.email
                                         ? "border-red-600 focus:ring-1 focus:ring-red-600"
                                         : "border-black dark:border-white focus:bg-white dark:focus:bg-black"
                                     }`}
@@ -148,7 +148,7 @@ function Login() {
                                     },
                                 })}
                                 className={`w-full pl-10 pr-12 py-3 bg-zinc-50 dark:bg-zinc-950 border text-sm font-mono focus:outline-none transition-all text-black dark:text-white placeholder:text-zinc-400
-                ${errors.password
+                                ${errors.password
                                         ? "border-red-600 focus:ring-1 focus:ring-red-600"
                                         : "border-black dark:border-white focus:bg-white dark:focus:bg-black"
                                     }`}
@@ -214,4 +214,14 @@ function Login() {
     );
 }
 
-export default Login;
+export default function Login() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-white dark:bg-black flex items-center justify-center text-xs font-mono uppercase tracking-widest text-black dark:text-white">
+                Loading Portal...
+            </div>
+        }>
+            <LoginContent />
+        </Suspense>
+    );
+}
