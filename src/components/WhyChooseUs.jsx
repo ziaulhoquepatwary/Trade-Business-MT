@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Zap, ShieldCheck, Clock, Layers, ArrowRight, CheckCircle2, Sparkles, Trophy } from "lucide-react";
+import { Zap, ShieldCheck, Clock, Layers, ArrowRight, CheckCircle2, Sparkles, Trophy, BarChart3, Cpu } from "lucide-react";
 
 export default function WhyChooseUs() {
     const keyAdvantages = [
@@ -26,6 +26,16 @@ export default function WhyChooseUs() {
             title: "Scalable Infrastructure",
             description: "Future-proof MERN & Next.js systems engineered to grow effortlessly with your business.",
         },
+        {
+            icon: Cpu,
+            title: "API-First Architecture",
+            description: "Modular and clean RESTful or GraphQL APIs designed for seamless third-party integrations.",
+        },
+        {
+            icon: BarChart3,
+            title: "Advanced Analytics Dashboard",
+            description: "Real-time data tracking, performance metrics, and actionable insights built right into your system.",
+        }
     ];
 
     const quickStats = [
@@ -35,12 +45,12 @@ export default function WhyChooseUs() {
     ];
 
     return (
-        <section className="relative w-full py-24 bg-[#EDE8F5] dark:bg-black text-slate-900 dark:text-white transition-colors duration-500 overflow-hidden">
+        <section className="relative w-full py-10 bg-[#EDE8F5] dark:bg-black text-slate-900 dark:text-white transition-colors duration-500 overflow-hidden">
             {/* Ambient Background Glows */}
             <div className="absolute top-1/4 left-10 w-80 h-80 bg-[#3D52A0]/10 dark:bg-[#3D52A0]/20 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#3D52A0]/15 dark:bg-[#3D52A0]/25 rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="relative max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+            <div className="relative mx-auto px-5 sm:px-8 lg:px-12">
 
                 {/* Main Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
