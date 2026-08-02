@@ -55,14 +55,6 @@ function Navbar() {
                             <Globe size={12} />
                             <span>Global</span>
                         </button>
-                        <span className="text-white/90">·</span>
-                        <Link href="#" className="text-gray-500 hover:text-white transition-colors duration-300">
-                            Careers
-                        </Link>
-                        <span className="text-white/90">·</span>
-                        <Link href="#" className="text-gray-500 hover:text-white transition-colors duration-300">
-                            Newsroom
-                        </Link>
                     </div>
                 </div>
             </div>
