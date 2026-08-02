@@ -17,7 +17,7 @@ const patuaOne = Patua_One({
 });
 
 export const metadata = {
-    title: "Trade Chain",
+    title: "Web Dev",
     description: "",
 };
 

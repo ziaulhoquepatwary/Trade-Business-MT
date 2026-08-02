@@ -1,10 +1,13 @@
 import React from 'react'
 import WebDevelopmentSection from './WebDevelopmentSection'
+import MobileAppSection from './MobileAppSection'
 
 function ServiceHome() {
     return (
-        <section className="mt-28">
+        <section>
             <WebDevelopmentSection />
+            <hr className="border-gray-300 dark:border-gray-600" />
+            <MobileAppSection />
         </section>
     )
 }
