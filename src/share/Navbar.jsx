@@ -81,16 +81,18 @@ function Navbar() {
                         <Link href="/" className="group">
                             <div className="flex items-center gap-2.5">
                                 <div className="relative w-10 h-10 rounded-xl bg-[#3D52A0] dark:from-white dark:to-slate-200 flex items-center justify-center shadow-md transition-colors duration-300">
-                                    <span className="text-xl font-black text-white dark:text-slate-900 tracking-tighter">
-                                        ⚓
-                                    </span>
+                                    <img
+                                        src="/logo.png"
+                                        alt="Logo"
+                                        className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
+                                    />
                                 </div>
                                 <div className="hidden sm:flex flex-col">
                                     <span className="text-sm font-bold text-[#3D52A0] dark:text-white leading-none tracking-tight transition-colors duration-300">
-                                        TradeChain
+                                        WEB DEV
                                     </span>
                                     <span className="text-[10px] text-[#3D52A0]/70 dark:text-slate-400 font-medium uppercase tracking-widest transition-colors duration-300">
-                                        Global Logistics
+                                        Next-Gen Software & IT Solutions
                                     </span>
                                 </div>
                             </div>
@@ -108,7 +110,7 @@ function Navbar() {
                                     <Link
                                         key={link.name}
                                         href={link.href}
-                                        className={`relative px-4 py-2 rounded-full text-[13px] font-semibold transition-all duration-300 ${active
+                                        className={`relative px-4 py-2 rounded-full text-[13px] text-gray-900 font-semibold transition-all duration-300 ${active
                                             ? "bg-[#3D52A0] text-white dark:bg-[#04cccc] dark:text-slate-950 shadow-md scale-100"
                                             : "text-[#3D52A0] dark:text-slate-400 hover:text-[#3D52A0] dark:hover:text-white hover:bg-[#3D52A0]/15 dark:hover:bg-white/10"
                                             }`}
