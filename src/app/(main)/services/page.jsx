@@ -3,6 +3,8 @@ import WebDevelopmentSection from './WebDevelopmentSection'
 import MobileAppSection from './MobileAppSection'
 import CloudSolutionsSection from './CloudSolutionsSection'
 import ITConsultingSection from './ITConsultingSection'
+import BusinessAutomationSection from './BusinessAutomationSection'
+import AISolutionsSection from './AISolutionsSection'
 
 function ServiceHome() {
     return (
@@ -14,6 +16,10 @@ function ServiceHome() {
             <CloudSolutionsSection />
             <hr className="border-gray-300 dark:border-gray-600" />
             <ITConsultingSection />
+            <hr className="border-gray-300 dark:border-gray-600" />
+            <BusinessAutomationSection />
+            <hr className="border-gray-300 dark:border-gray-600" />
+            <AISolutionsSection />
         </section>
     )
 }
