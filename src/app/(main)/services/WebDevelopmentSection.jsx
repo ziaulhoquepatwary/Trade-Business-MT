@@ -1,6 +1,7 @@
 import React from 'react';
 import { Code2, Globe, ShoppingCart, Layout, Cpu, Layers, ArrowRight, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import PortfolioButton from './PortfolioButton';
 
 export default function WebDevelopmentSection() {
     const websiteTypes = [
@@ -49,13 +50,7 @@ export default function WebDevelopmentSection() {
                         </p>
 
                         <div className="pt-2">
-                            <Link
-                                href="/portfolio"
-                                className="inline-flex items-center gap-3 px-7 py-3.5 rounded-xl text-white font-medium bg-[#3D52A0] hover:bg-[#3D52A0]/90 dark:bg-[#3D52A0] dark:hover:bg-[#3D52A0]/80 transition-all duration-200 shadow-lg shadow-[#3D52A0]/25 hover:shadow-xl group"
-                            >
-                                <span>See Our Portfolio</span>
-                                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                            </Link>
+                            <PortfolioButton />
                         </div>
                     </div>
 
