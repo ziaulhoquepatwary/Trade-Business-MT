@@ -1,14 +1,14 @@
 import React from 'react'
 import ContactSection from './ContactSection'
 import ContactHero from './ContactHero'
+import FaqSection from './FaqSection'
 
 function ContactPage() {
     return (
         <main>
             <ContactHero />
-            <div id="contact-form-section">
-                <ContactSection />
-            </div>
+            <ContactSection />
+            <FaqSection />
         </main>
     )
 }
