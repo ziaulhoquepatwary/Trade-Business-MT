@@ -53,7 +53,7 @@ export const ContactForm = () => {
     };
 
     return (
-        <div className="w-full bg-white/60 dark:bg-[#09090b]/80 backdrop-blur-2xl rounded-2xl border border-gray-200 dark:border-white/10 p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
+        <div className="w-full bg-white/60 dark:bg-[#09090b]/80 backdrop-blur-2xl rounded-2xl border border-gray-200 dark:border-white/10  p-4 lg:p-8 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)]">
 
             {isSuccess ? (
                 <div className="flex flex-col items-center justify-center h-full min-h-[400px] text-center animate-[fadeIn_0.5s_ease-out]">
@@ -148,7 +148,7 @@ export const ContactForm = () => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group w-full relative flex items-center justify-center gap-3 px-8 py-5 rounded-2xl bg-[#3D52A0] text-white font-bold text-lg transition-all duration-300 hover:bg-[#2a3a75] disabled:opacity-70 overflow-hidden"
+                        className="group w-full relative flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#3D52A0] text-white font-bold text-lg transition-all duration-300 hover:bg-[#2a3a75] disabled:opacity-70 overflow-hidden"
                     >
                         {isSubmitting ? (
                             <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
