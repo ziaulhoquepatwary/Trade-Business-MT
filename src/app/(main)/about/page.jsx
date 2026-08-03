@@ -1,11 +1,13 @@
 import React from 'react'
 import AboutHero from './AboutHero'
+import OurStory from './OurStory'
 
 function AboutPage() {
     return (
-        <section>
+        <>
             <AboutHero />
-        </section>
+            <OurStory />
+        </>
     )
 }
 
