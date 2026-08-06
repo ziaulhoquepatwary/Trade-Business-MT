@@ -5,10 +5,13 @@ import CloudSolutionsSection from './CloudSolutionsSection'
 import ITConsultingSection from './ITConsultingSection'
 import BusinessAutomationSection from './BusinessAutomationSection'
 import AISolutionsSection from './AISolutionsSection'
+import ServicesHero from './ServicesHero'
 
 function ServiceHome() {
     return (
         <section>
+            <ServicesHero />
+            <hr className="border-gray-300 dark:border-gray-600" />
             <WebDevelopmentSection />
             <hr className="border-gray-300 dark:border-gray-600" />
             <MobileAppSection />
