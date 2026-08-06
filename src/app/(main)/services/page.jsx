@@ -6,6 +6,7 @@ import ITConsultingSection from './ITConsultingSection'
 import BusinessAutomationSection from './BusinessAutomationSection'
 import AISolutionsSection from './AISolutionsSection'
 import ServicesHero from './ServicesHero'
+import PremiumCTA from './PremiumCTA'
 
 function ServiceHome() {
     return (
@@ -23,6 +24,7 @@ function ServiceHome() {
             <BusinessAutomationSection />
             <hr className="border-gray-300 dark:border-gray-600" />
             <AISolutionsSection />
+            <PremiumCTA />
         </section>
     )
 }
