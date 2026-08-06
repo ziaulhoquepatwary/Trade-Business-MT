@@ -3,7 +3,7 @@ export const metadata = {
     description: "Web Development & Digital Solutions Platform",
 };
 
-export default function Services({ children }) {
+export default function PrivacyPolicy({ children }) {
     return (
         <section className="w-full h-full min-h-screen dark:bg-black">
             {children}
