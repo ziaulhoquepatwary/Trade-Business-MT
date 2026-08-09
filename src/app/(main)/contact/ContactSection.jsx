@@ -2,15 +2,14 @@
 
 import { motion } from "framer-motion";
 import { Mail, MapPin } from "lucide-react";
-import { ContactForm } from "./ContactForm";
+import { ContactForm } from "../../../components/ContactForm";
 
-// অ্যানিমেশন ভ্যারিয়েন্টস
 const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.2, // প্রতিটি উপাদান পরপর আসবে
+            staggerChildren: 0.2,
         },
     },
 };
@@ -28,7 +27,7 @@ export default function ContactSection() {
     return (
         <section className="relative w-full py-20 bg-[#EDE8F5] dark:bg-[#000000] overflow-hidden transition-colors duration-500 flex items-center">
 
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px]" />
+            <div className="fixed inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
             {/* Ambient Background Blob with Pulsing Animation */}
             <motion.div

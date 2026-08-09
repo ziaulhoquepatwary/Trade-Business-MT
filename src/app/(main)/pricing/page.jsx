@@ -57,7 +57,7 @@ export default function PricingPage() {
     const activeService = services.find(s => s.slug === activeSlug) || services[0];
 
     return (
-        <div className="w-full min-h-screen pt-30 bg-[#EDE8F5] dark:bg-[#000000] text-gray-900 dark:text-gray-100 py-16 px-4 md:px-8 lg:px-12 transition-colors duration-500">
+        <div className="w-full min-h-screen pt-35 bg-[#EDE8F5] dark:bg-[#000000] text-gray-900 dark:text-gray-100 py-16 px-4 md:px-8 lg:px-12 transition-colors duration-500">
 
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px]" />
 

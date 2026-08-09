@@ -81,13 +81,13 @@ const PortfolioPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#EDE8F5] dark:bg-[#000000] pt-30 py-24 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+        <div className="min-h-screen bg-[#EDE8F5] dark:bg-[#000000] pt-30 py-24 px-4 sm:px-6 lg:px-8 transition-colors duration-300 relative">
 
-            <div className="fixed inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px]" />
+            {/* Background Grid - Added pointer-events-none */}
+            <div className="fixed inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
 
-
-
-            <div className="max-w-7xl mx-auto">
+            {/* Main Content - Added relative z-10 */}
+            <div className="max-w-7xl mx-auto relative z-10">
 
                 {/* Header Section */}
                 <motion.div
@@ -170,8 +170,9 @@ const PortfolioPage = () => {
 
                     {!loading && hasMore && portfolios.length > 0 && (
                         <button
+                            type="button"
                             onClick={() => setPage(prev => prev + 1)}
-                            className="px-8 py-3 bg-transparent border-2 border-[#3D52A0] text-[#3D52A0] rounded-full font-bold hover:bg-[#3D52A0] hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1"
+                            className="px-8 py-3 bg-transparent border-2 border-[#3D52A0] text-[#3D52A0] rounded-full font-bold hover:bg-[#3D52A0] hover:text-white transition-all duration-300 shadow-sm hover:shadow-lg hover:-translate-y-1 cursor-pointer"
                         >
                             Load More Projects
                         </button>
