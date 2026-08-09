@@ -97,7 +97,7 @@ export default function QuotePage() {
                     {/* STEP 1: Basic Details */}
                     {step === 1 && (
                         <motion.div key="step1" variants={formVariants} initial="hidden" animate="visible" exit="exit" className="w-full">
-                            <h2 className="text-2xl md:text-3xl font-bold mb-6 break-words">Let's get to know you</h2>
+                            <h2 className="text-2xl md:text-3xl font-bold mb-6 wrap-break-words">Let's get to know you</h2>
 
                             <div className="flex flex-col gap-5 w-full">
                                 <div className="flex flex-col md:flex-row gap-5 w-full">
