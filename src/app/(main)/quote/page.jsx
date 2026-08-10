@@ -3,8 +3,10 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ArrowLeft, CheckCircle, Link as LinkIcon } from 'lucide-react';
+import { ArrowRight, ArrowLeft, CheckCircle, Link as LinkIcon, Loader2 } from 'lucide-react';
 import Link from "next/link";
+import Swal from 'sweetalert2';
+import { sendQuotationEmail } from '@/lib/action/quotation';
 
 const servicesList = [
     "Web Development", "Mobile App", "UI/UX Design",
@@ -14,7 +16,14 @@ const servicesList = [
 
 export default function QuotePage() {
     const [step, setStep] = useState(1);
-    const { register, handleSubmit, watch, trigger, setValue } = useForm({
+    const {
+        register,
+        handleSubmit,
+        watch,
+        trigger,
+        setValue,
+        formState: { errors, isSubmitting }
+    } = useForm({
         defaultValues: { services: [] }
     });
 
@@ -32,16 +41,67 @@ export default function QuotePage() {
         if (step === 1) isValid = await trigger(['name', 'email', 'phone', 'company']);
         if (step === 2) {
             if (selectedServices.length > 0) isValid = true;
-            else alert("Please select at least one service!");
+            else {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Service Required',
+                    text: 'Please select at least one service before proceeding.',
+                    confirmButtonColor: '#3D52A0',
+                });
+            }
         }
         if (isValid) setStep((prev) => prev + 1);
     };
 
     const handlePrev = () => setStep((prev) => prev - 1);
 
-    const onSubmit = (data) => {
-        console.log("Submitted Data:", data);
-        setStep(4); // Success Step
+    const onSubmit = async (data) => {
+        Swal.fire({
+            title: "Submitting Proposal...",
+            text: "Please wait a moment while we process your request.",
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
+        try {
+            const payload = {
+                name: data.name?.trim(),
+                email: data.email?.trim(),
+                phone: data.phone?.trim() || "",
+                company: data.company?.trim() || "",
+                services: data.services,
+                description: data.description?.trim(),
+                budget: data.budget || "",
+                driveLink: data.driveLink?.trim() || "",
+            };
+
+            const res = await sendQuotationEmail(payload);
+
+            console.log(res)
+
+            const isSuccess = res?.success || res?.data?.success || res?.status === 200;
+
+            if (isSuccess) {
+                Swal.close();
+                setStep(4); // Success Step UI এ নিয়ে যাওয়া
+            } else {
+                throw new Error(res?.message || res?.data?.message || "Failed to submit quotation request.");
+            }
+        } catch (error) {
+            console.error("Error submitting quotation:", error);
+
+            Swal.fire({
+                icon: "error",
+                title: "Submission Failed",
+                text:
+                    error?.response?.data?.message ||
+                    error?.message ||
+                    "Something went wrong! Please try again later.",
+                confirmButtonColor: "#ef4444",
+            });
+        }
     };
 
     const toggleService = (service) => {
@@ -54,12 +114,12 @@ export default function QuotePage() {
 
     return (
         // Main Wrapper: Centered Content
-        <div className="w-full min-h-screen flex flex-col items-center justify-center p-4 py-12 lg:p-10 bg-[#EDE8F5] dark:bg-[#000000] text-gray-900 dark:text-gray-100 transition-colors duration-500">
+        <div className="w-full min-h-screen flex flex-col items-center justify-center p-4 py-12 lg:p-10 bg-[#f2eff7] dark:bg-[#000000] text-gray-900 dark:text-gray-100 transition-colors duration-500">
 
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px]" />
 
             {/* Top Heading & Paragraph */}
-            <div className="w-[95%] md:w-[80%] lg:w-[60%] xl:w-[50%] text-center mb-10">
+            <div className="w-[95%] md:w-[80%] lg:w-[60%] xl:w-[50%] text-center mb-10 z-10">
                 <motion.h1
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -78,7 +138,7 @@ export default function QuotePage() {
             </div>
 
             {/* Centered Form Card */}
-            <div className="w-[95%] md:w-[80%] lg:w-[60%] xl:w-[50%] bg-white dark:bg-[#09090b] shadow-2xl dark:shadow-[#3D52A0]/10 rounded-3xl p-6 md:p-10 lg:p-12 border border-gray-100 dark:border-gray-800 relative overflow-hidden">
+            <div className="w-[95%] md:w-[80%] lg:w-[60%] xl:w-[50%] bg-white dark:bg-[#09090b] shadow-2xl dark:shadow-[#3D52A0]/10 rounded-3xl p-6 md:p-10 lg:p-12 border border-gray-100 dark:border-gray-800 relative overflow-hidden z-10">
 
                 {/* Progress Bar */}
                 {step < 4 && (
@@ -104,19 +164,27 @@ export default function QuotePage() {
                                     <div className="w-full">
                                         <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Full Name *</label>
                                         <input
-                                            {...register('name', { required: true })}
+                                            {...register('name', { required: "Name is required" })}
                                             className="w-full p-4 rounded-xl bg-gray-50 dark:bg-[#0f172a] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3D52A0] transition-all"
                                             placeholder="John Doe"
                                         />
+                                        {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
                                     </div>
                                     <div className="w-full">
                                         <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Email Address *</label>
                                         <input
                                             type="email"
-                                            {...register('email', { required: true })}
+                                            {...register('email', {
+                                                required: "Email is required",
+                                                pattern: {
+                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                    message: "Invalid email address"
+                                                }
+                                            })}
                                             className="w-full p-4 rounded-xl bg-gray-50 dark:bg-[#0f172a] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3D52A0] transition-all"
                                             placeholder="john@company.com"
                                         />
+                                        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
                                     </div>
                                 </div>
 
@@ -141,7 +209,7 @@ export default function QuotePage() {
                             </div>
 
                             <div className="mt-8 flex justify-end">
-                                <button onClick={handleNext} className="bg-[#3D52A0] hover:bg-[#2d3d7a] text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto">
+                                <button type="button" onClick={handleNext} className="bg-[#3D52A0] hover:bg-[#2d3d7a] text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto cursor-pointer">
                                     Next Step <ArrowRight size={20} />
                                 </button>
                             </div>
@@ -163,7 +231,6 @@ export default function QuotePage() {
                                             : 'border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-[#0f172a] text-gray-600 dark:text-gray-400 hover:border-[#3D52A0]/50'
                                             }`}
                                     >
-                                        {/* shrink-0 prevents the icon from squeezing, allowing text to wrap safely */}
                                         <div className={`shrink-0 mt-0.5 w-6 h-6 rounded-full flex items-center justify-center border-2 ${selectedServices.includes(service) ? 'border-[#3D52A0] bg-[#3D52A0]' : 'border-gray-300'}`}>
                                             {selectedServices.includes(service) && <CheckCircle size={14} className="text-white" />}
                                         </div>
@@ -173,10 +240,10 @@ export default function QuotePage() {
                             </div>
 
                             <div className="mt-8 flex flex-col-reverse md:flex-row justify-between gap-4 w-full">
-                                <button onClick={handlePrev} className="text-gray-500 hover:text-gray-900 dark:hover:text-white px-8 py-4 font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto bg-gray-100 dark:bg-gray-800 rounded-xl md:bg-transparent md:dark:bg-transparent">
+                                <button type="button" onClick={handlePrev} className="text-gray-500 hover:text-gray-900 dark:hover:text-white px-8 py-4 font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto bg-gray-100 dark:bg-gray-800 rounded-xl md:bg-transparent md:dark:bg-transparent cursor-pointer">
                                     <ArrowLeft size={20} /> Back
                                 </button>
-                                <button onClick={handleNext} className="bg-[#3D52A0] hover:bg-[#2d3d7a] text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto">
+                                <button type="button" onClick={handleNext} className="bg-[#3D52A0] hover:bg-[#2d3d7a] text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto cursor-pointer">
                                     Project Details <ArrowRight size={20} />
                                 </button>
                             </div>
@@ -192,11 +259,12 @@ export default function QuotePage() {
                                 <div className="w-full">
                                     <label className="text-sm font-semibold mb-2 block text-gray-700 dark:text-gray-300">Project Description *</label>
                                     <textarea
-                                        {...register('description', { required: true })}
+                                        {...register('description', { required: "Project description is required" })}
                                         rows={5}
                                         className="w-full p-4 rounded-xl bg-gray-50 dark:bg-[#0f172a] border border-gray-200 dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-[#3D52A0] transition-all resize-y"
                                         placeholder="Briefly describe what you want to build..."
                                     />
+                                    {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description.message}</p>}
                                 </div>
 
                                 <div className="flex flex-col md:flex-row gap-5 w-full">
@@ -231,11 +299,24 @@ export default function QuotePage() {
                             </div>
 
                             <div className="mt-8 flex flex-col-reverse md:flex-row justify-between gap-4 w-full">
-                                <button onClick={handlePrev} className="text-gray-500 hover:text-gray-900 dark:hover:text-white px-8 py-4 font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto bg-gray-100 dark:bg-gray-800 rounded-xl md:bg-transparent md:dark:bg-transparent">
+                                <button type="button" onClick={handlePrev} disabled={isSubmitting} className="text-gray-500 hover:text-gray-900 dark:hover:text-white px-8 py-4 font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto bg-gray-100 dark:bg-gray-800 rounded-xl md:bg-transparent md:dark:bg-transparent cursor-pointer disabled:opacity-50">
                                     <ArrowLeft size={20} /> Back
                                 </button>
-                                <button onClick={handleSubmit(onSubmit)} className="bg-[#3D52A0] hover:bg-[#2d3d7a] text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto shadow-lg shadow-[#3D52A0]/30">
-                                    Submit Request <CheckCircle size={20} />
+                                <button
+                                    type="button"
+                                    onClick={handleSubmit(onSubmit)}
+                                    disabled={isSubmitting}
+                                    className="bg-[#3D52A0] hover:bg-[#2d3d7a] text-white px-8 py-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-all w-full md:w-auto shadow-lg shadow-[#3D52A0]/30 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? (
+                                        <>
+                                            <Loader2 size={20} className="animate-spin" /> Submitting...
+                                        </>
+                                    ) : (
+                                        <>
+                                            Submit Request <CheckCircle size={20} />
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </motion.div>
@@ -258,7 +339,7 @@ export default function QuotePage() {
                             </p>
                             <Link
                                 href="/"
-                                className="mt-8 text-[#3D52A0] font-bold hover:underline"
+                                className="mt-8 inline-block text-[#3D52A0] font-bold hover:underline"
                             >
                                 Return to Home
                             </Link>
