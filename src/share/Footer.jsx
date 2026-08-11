@@ -6,10 +6,11 @@ function Footer() {
 
     const quickLinks = [
         { name: "Home", href: "/" },
-        { name: "Solutions", href: "/solutions" },
         { name: "Services", href: "/services" },
-        { name: "Tracking", href: "/tracking" },
-        { name: "Network", href: "/network" },
+        { name: "Pricing", href: "/pricing" },
+        { name: "Portfolio", href: "/portfolio" },
+        { name: "About", href: "/about" },
+        { name: "Contact", href: "/contact" },
     ];
 
     const legalLinks = [
