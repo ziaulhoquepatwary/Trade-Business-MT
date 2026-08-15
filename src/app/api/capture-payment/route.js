@@ -11,6 +11,7 @@ export async function POST(request) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
+            cache: 'no-store'
         });
 
         const data = await response.json();

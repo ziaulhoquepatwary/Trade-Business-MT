@@ -71,7 +71,7 @@ function CheckoutContent() {
             const result = await response.json();
 
             if (result.success && result.checkoutUrl) {
-                router.push(result.checkoutUrl);
+                window.location.assign(result.checkoutUrl);
             } else {
                 alert(result.message || "Something went wrong. Please try again.");
                 setIsProcessing(false);
@@ -105,7 +105,6 @@ function CheckoutContent() {
             <div className="fixed inset-0 bg-[linear-gradient(to_right,#3D52A00d_1px,transparent_1px),linear-gradient(to_bottom,#3D52A00d_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff0f_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0f_1px,transparent_1px)] bg-[size:32px_32px]" />
 
             <div className="max-w-6xl mx-auto relative z-10">
-                {/* Header Section with Back Button */}
                 <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                     <div>
                         <h1 className="text-3xl md:text-4xl font-extrabold mb-2">Complete Your Order</h1>
@@ -121,8 +120,6 @@ function CheckoutContent() {
                 </div>
 
                 <div className="flex flex-col lg:flex-row gap-8 items-start">
-
-                    {/* Left Side: Package Details */}
                     <div className="w-full lg:w-7/12 bg-white dark:bg-[#09090b] rounded-3xl p-6 md:p-10 border border-gray-200 dark:border-gray-800 shadow-xl">
                         <div className="mb-8">
                             <span className="text-sm font-bold uppercase tracking-wider text-[#3D52A0] mb-2 block">{slug.replace('-', ' ')}</span>
@@ -163,10 +160,8 @@ function CheckoutContent() {
                         </div>
                     </div>
 
-                    {/* Right Side: Form & Checkout */}
                     <div className="w-full lg:w-5/12 bg-white dark:bg-[#09090b] rounded-3xl p-6 md:p-10 border border-[#3D52A0]/30 shadow-2xl shadow-[#3D52A0]/10 sticky top-32">
                         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
                             <div>
                                 <h3 className="text-xl font-bold mb-4">Personal Details</h3>
                                 <div className="space-y-4">

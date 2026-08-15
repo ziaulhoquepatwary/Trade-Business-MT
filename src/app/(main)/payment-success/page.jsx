@@ -16,9 +16,11 @@ function SuccessContent() {
     const hasFetched = useRef(false);
 
     useEffect(() => {
+        let isMounted = true;
+
         const verifyPayment = async () => {
             if (!token || !orderId) {
-                setStatus('failed');
+                if (isMounted) setStatus('failed');
                 return;
             }
 
@@ -29,23 +31,30 @@ function SuccessContent() {
                 const response = await fetch('/api/capture-payment', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ token, orderId })
+                    body: JSON.stringify({ token, orderId }),
+                    cache: 'no-store'
                 });
 
                 const result = await response.json();
 
-                if (result.success || result.message === "Order not found or already paid") {
-                    setStatus('success');
-                } else {
-                    setStatus('failed');
+                if (isMounted) {
+                    if (result.success || result.message === "Order not found or already paid") {
+                        setStatus('success');
+                    } else {
+                        setStatus('failed');
+                    }
                 }
             } catch (error) {
                 console.error("Verification error:", error);
-                setStatus('failed');
+                if (isMounted) setStatus('failed');
             }
         };
 
         verifyPayment();
+
+        return () => {
+            isMounted = false;
+        };
     }, [token, orderId]);
 
     return (
@@ -69,8 +78,8 @@ function SuccessContent() {
                         <p className="text-gray-600 dark:text-gray-400 mb-8">
                             Thank you for your order. We have received your payment and our team will start working on it shortly.
                         </p>
-                        <Link href="/dashboard" className="bg-[#3D52A0] text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-[#3D52A0]/30 hover:bg-[#2d3d7a] transition-all">
-                            Go to Dashboard
+                        <Link href="/" className="bg-[#3D52A0] text-white px-8 py-3 rounded-xl font-bold shadow-lg shadow-[#3D52A0]/30 hover:bg-[#2d3d7a] transition-all">
+                            Go Home
                         </Link>
                     </div>
                 )}
