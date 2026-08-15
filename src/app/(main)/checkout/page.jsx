@@ -13,6 +13,7 @@ function CheckoutContent() {
     const slug = searchParams.get('slug');
     const tier = searchParams.get('tier');
 
+    const [isProcessing, setIsProcessing] = useState(false);
     const [packageData, setPackageData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [customPrice, setCustomPrice] = useState(0);
@@ -45,16 +46,41 @@ function CheckoutContent() {
         getServiceDetails();
     }, [slug, tier]);
 
-    const onSubmit = (data) => {
-        const orderPayload = {
-            ...data,
-            tier: packageData.tier,
-            serviceSlug: slug,
-            finalPrice: customPrice,
-            paymentGateway: 'default_gateway'
-        };
+    const onSubmit = async (data) => {
+        try {
+            setIsProcessing(true);
 
-        console.log("Proceeding to payment with payload: ", orderPayload);
+            const orderPayload = {
+                name: data.name || "Guest",
+                email: data.email || "Not Provided",
+                orderType: "PACKAGE_ORDER",
+                amount: customPrice,
+                packageDetails: {
+                    slug: slug,
+                    tier: packageData.tier,
+                    title: packageData.title
+                }
+            };
+
+            const response = await fetch('/api/create-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderPayload)
+            });
+
+            const result = await response.json();
+
+            if (result.success && result.checkoutUrl) {
+                router.push(result.checkoutUrl);
+            } else {
+                alert(result.message || "Something went wrong. Please try again.");
+                setIsProcessing(false);
+            }
+        } catch (error) {
+            console.error("Payment initiation failed:", error);
+            alert("Failed to connect to payment server.");
+            setIsProcessing(false);
+        }
     };
 
     if (loading) {
@@ -144,7 +170,6 @@ function CheckoutContent() {
                             <div>
                                 <h3 className="text-xl font-bold mb-4">Personal Details</h3>
                                 <div className="space-y-4">
-                                    {/* Name Input - Optional but no visual cue */}
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Full Name</label>
                                         <input
@@ -155,7 +180,6 @@ function CheckoutContent() {
                                         />
                                     </div>
 
-                                    {/* Email Input - Optional but no visual cue */}
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Email Address</label>
                                         <input
@@ -175,7 +199,6 @@ function CheckoutContent() {
                                     <span className="text-xl font-bold">Total</span>
                                     <div className="flex items-center">
                                         <span className="text-3xl font-extrabold text-[#3D52A0] dark:text-white mr-1">$</span>
-                                        {/* Secretly Editable Price Input */}
                                         <input
                                             type="number"
                                             value={customPrice}
@@ -186,9 +209,26 @@ function CheckoutContent() {
                                 </div>
                             </div>
 
-                            <button type="submit" className="w-full bg-[#3D52A0] hover:bg-[#2d3d7a] text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-xl shadow-[#3D52A0]/30">
-                                <ShieldCheck size={20} /> Proceed to Order
+                            <button
+                                type="submit"
+                                disabled={isProcessing}
+                                className={`w-full py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-all shadow-xl ${isProcessing
+                                    ? 'bg-[#3D52A0]/70 cursor-not-allowed text-white/90 shadow-none'
+                                    : 'bg-[#3D52A0] hover:bg-[#2d3d7a] text-white shadow-[#3D52A0]/30'
+                                    }`}
+                            >
+                                {isProcessing ? (
+                                    <>
+                                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                                        Processing...
+                                    </>
+                                ) : (
+                                    <>
+                                        <ShieldCheck size={20} /> Proceed to Order
+                                    </>
+                                )}
                             </button>
+
                             <p className="text-xs text-center text-gray-500 dark:text-gray-400 mt-4">
                                 Payments are securely processed. You will be redirected to the payment gateway.
                             </p>
