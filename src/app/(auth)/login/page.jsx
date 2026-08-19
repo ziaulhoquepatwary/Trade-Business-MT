@@ -200,15 +200,15 @@ function LoginContent() {
                     <span>Google</span>
                 </button>
 
-                {/* Footer Link */}
+                {/* Footer Link: Registration */}
                 <div className="text-center pt-4">
                     <p className="text-sm text-gray-500 dark:text-zinc-400">
-                        Ready to start a new project?{" "}
+                        Don't have an account?{" "}
                         <Link
-                            href="/contact"
+                            href="/register"
                             className="font-semibold text-[#3D52A0] dark:text-[#8b9de3] hover:underline transition-all"
                         >
-                            Get in touch
+                            Create an account
                         </Link>
                     </p>
                 </div>
