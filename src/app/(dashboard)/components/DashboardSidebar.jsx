@@ -2,21 +2,22 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, ChevronRight, X, FolderKanban, FilePlusCorner, UserPen, LucideFilePlusCorner, Video, } from "lucide-react";
+import { LayoutDashboard, ChevronRight, X, FolderKanban, FilePlusCorner, UserPen, CalendarArrowDown, Users } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
 const MENU_CONFIG = {
     admin: [
         { name: "Dashboard", href: "/dashboard/admin", icon: LayoutDashboard },
-        { name: "Manage Course", href: "/dashboard/admin/manage-course", icon: FolderKanban },
-        { name: "Add Course", href: "/dashboard/admin/add-course", icon: FilePlusCorner },
-        { name: "Add Blog", href: "/dashboard/admin/add-blog", icon: LucideFilePlusCorner },
+        { name: "Orders", href: "/dashboard/admin/orders", icon: CalendarArrowDown },
+        { name: "Manage Package", href: "/dashboard/admin/manage-packages", icon: FolderKanban },
+        { name: "Add Packages", href: "/dashboard/admin/add-packages", icon: FilePlusCorner },
+        { name: "All Users", href: "/dashboard/admin/users", icon: Users },
         { name: "Profile", href: "/my-profile", icon: UserPen },
     ],
 
     user: [
         { name: "Dashboard", href: "/dashboard/user", icon: LayoutDashboard },
-        { name: "My Courses", href: "/dashboard/user/courses", icon: Video },
+        { name: "My Orders", href: "/dashboard/user/orders", icon: CalendarArrowDown },
         { name: "Profile", href: "/my-profile", icon: UserPen },
     ],
 };
