@@ -79,8 +79,8 @@ export default function PricingPage() {
             </div>
 
             {!loading && services.length > 0 && (
-                <div className="w-full overflow-x-auto pb-4 mb-12 scrollbar-none flex justify-start md:justify-center">
-                    <div className="flex items-center gap-2 p-2 bg-white/70 dark:bg-[#09090b]/80 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-800 shadow-lg">
+                <div className="w-full overflow-x-auto pb-4 mb-12 scrollbar-none">
+                    <div className="flex items-center gap-2 p-2 bg-white/70 dark:bg-[#09090b]/80 backdrop-blur-md rounded-2xl border border-gray-200 dark:border-gray-800 shadow-lg w-max">
                         {services.map((service) => {
                             const IconComponent = iconMap[service.categoryIcon] || Code;
                             const isActive = activeSlug === service.slug;
@@ -89,7 +89,10 @@ export default function PricingPage() {
                                 <button
                                     key={service.slug}
                                     onClick={() => setActiveSlug(service.slug)}
-                                    className={`relative flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition-all whitespace-nowrap shrink-0 ${isActive ? 'text-white' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'}`}
+                                    className={`relative flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition-all whitespace-nowrap shrink-0 cursor-pointer ${isActive
+                                            ? 'text-white'
+                                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                        }`}
                                 >
                                     {isActive && (
                                         <motion.div
